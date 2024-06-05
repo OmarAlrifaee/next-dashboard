@@ -5,9 +5,9 @@ type Props = {
 };
 const DashboardLayout = ({ children }: Props) => {
   return (
-    <section>
+    <section className="flex">
       <Sidebar />
-      <div>
+      <div className="flex-[4] p-5">
         <Navbar />
         {children}
       </div>
