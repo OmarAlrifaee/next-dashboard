@@ -5,7 +5,7 @@ import { MdLogout } from "react-icons/md";
 
 const Sidebar = () => {
   return (
-    <section className="flex-1 bg-main-soft-bg p-5">
+    <section className="flex-1 bg-main-soft-bg p-5 md:block hidden">
       <div className="flex items-center gap-[20px] mt-[20px]">
         <Image
           src={"/noavatar.png"}
