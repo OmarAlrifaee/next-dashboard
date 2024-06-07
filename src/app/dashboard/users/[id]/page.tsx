@@ -1,31 +1,33 @@
+import { UserType } from "@/types";
 import Image from "next/image";
-
+import { getOneUser } from "@/actions/users";
 type Props = {
   params: {
     id: string;
   };
 };
-const UserDetails = ({ params }: Props) => {
+const UserDetails = async ({ params }: Props) => {
+  const user = (await getOneUser(params.id)) as UserType;
   return (
     <section className="flex gap-10">
       <div className="bg-main-soft-bg p-[10px] rounded-md mt-[20px] h-fit">
         <div className="size-[300px] relative rounded-md overflow-hidden">
-          <Image src={"/noavatar.png"} alt="" fill />
+          <Image src={user.avatar || "/noavatar.png"} alt="" fill />
         </div>
-        <p className="mt-3 font-semibold">Omar Alrifai</p>
+        <p className="mt-3 font-semibold">{user.username}</p>
       </div>
       <div className="flex-grow bg-main-soft-bg p-[10px] rounded-md mt-[20px]">
         <form action="" className="flex flex-col gap-5">
           <input
             type="text"
-            placeholder="Username"
+            placeholder={user.username}
             name="username"
             required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold "
           />
           <input
             type="email"
-            placeholder="Email"
+            placeholder={user.email}
             name="email"
             required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold "
@@ -39,13 +41,13 @@ const UserDetails = ({ params }: Props) => {
           />
           <input
             type="number"
-            placeholder="Phone"
+            placeholder={user.phone.toString()}
             name="phone"
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold "
           />
           <input
             type="text"
-            placeholder="Address"
+            placeholder={user.address}
             name="address"
             required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold "
@@ -55,10 +57,18 @@ const UserDetails = ({ params }: Props) => {
             id="isAdmin"
             className=" p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold "
           >
-            <option selected value="true" className="bg-main-soft-bg">
+            <option
+              selected={user.isAdmin === "true" ? true : false}
+              value="true"
+              className="bg-main-soft-bg"
+            >
               Yes
             </option>
-            <option value="false" className="bg-main-soft-bg">
+            <option
+              value="false"
+              className="bg-main-soft-bg"
+              selected={user.isAdmin === "true" ? false : true}
+            >
               No
             </option>
           </select>{" "}
@@ -67,10 +77,18 @@ const UserDetails = ({ params }: Props) => {
             id="isActive"
             className=" p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold "
           >
-            <option selected value="true" className="bg-main-soft-bg">
+            <option
+              value="true"
+              className="bg-main-soft-bg"
+              selected={user.isActive === "true" ? true : false}
+            >
               Yes
             </option>
-            <option value="false" className="bg-main-soft-bg">
+            <option
+              value="false"
+              className="bg-main-soft-bg"
+              selected={user.isActive === "true" ? false : true}
+            >
               No
             </option>
           </select>

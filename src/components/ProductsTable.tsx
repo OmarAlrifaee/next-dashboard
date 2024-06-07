@@ -1,6 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-const ProductsTable = () => {
+import { ProductType } from "@/types";
+import { deleteProductAction } from "@/actions/products";
+type Props = {
+  product: ProductType;
+}; //  correct the category faild
+const ProductsTable = ({ product }: Props) => {
   return (
     <table className="w-full mt-5">
       <thead>
@@ -18,8 +23,8 @@ const ProductsTable = () => {
           <td>
             <div className="flex items-center justify-center gap-[10px]">
               <Image
-                src={"/noproduct.jpg"}
-                alt=""
+                src={product.img || "/noproduct.jpg"}
+                alt={product.title}
                 width={40}
                 height={40}
                 className="object-cover rounded-full"
@@ -27,20 +32,27 @@ const ProductsTable = () => {
               <span>laptop</span>
             </div>
           </td>
-          <td>desc</td>
-          <td>$200</td>
-          <td>13.01.2002</td>
-          <td>72</td>
+          <td>{product.desc}</td>
+          <td>${product.price}</td>
+          <td>{product.createdAt?.toLocaleDateString()}</td>
+          <td>{product.stock}</td>
           <td>
             <div className="flex items-center justify-center gap-[20px]">
-              <Link href={`/dashboard/products/${1}`}>
+              <Link href={`/dashboard/products/${product.id}`}>
                 <button className="bg-[teal] py-[5px] px-[10px] rounded-sm border-none cursor-pointer">
                   View
                 </button>
               </Link>
-              <button className="bg-[crimson] py-[5px] px-[10px] rounded-sm border-none cursor-pointer">
-                Delete
-              </button>
+              <form
+                action={async () => {
+                  "use server";
+                  deleteProductAction(product.id);
+                }}
+              >
+                <button className="bg-[crimson] py-[5px] px-[10px] rounded-sm border-none cursor-pointer">
+                  Delete
+                </button>
+              </form>
             </div>
           </td>
         </tr>
