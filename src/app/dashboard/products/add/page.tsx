@@ -54,6 +54,12 @@ const AddProduct = () => {
             name="size"
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
+          <input
+            type="text"
+            placeholder="image url"
+            name="img"
+            className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
+          />
         </div>
         <div className="mt-10 flex flex-col gap-5">
           <textarea

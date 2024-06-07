@@ -67,6 +67,12 @@ const ProductDetails = async ({ params }: Props) => {
             required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
+          <input
+            type="text"
+            placeholder="image url"
+            name="img"
+            className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
+          />
           <select
             name="category"
             id="category"
