@@ -2,6 +2,7 @@
 import { connectToDB } from "@/models/connection";
 import { ProductModel } from "@/models/products";
 import { ProductType } from "@/types";
+import { redirect } from "next/navigation";
 
 export const getAllProducts = async () => {
   connectToDB();
@@ -12,7 +13,7 @@ export const getAllProducts = async () => {
     throw new Error("faild to fetch all products");
   }
 };
-export const deleteProductAction = async (id: string) => {
+export const deleteProduct = async (id: string) => {
   connectToDB();
   try {
     await ProductModel.findByIdAndDelete(id);
@@ -28,4 +29,27 @@ export const getOneProduct = async (id: string) => {
   } catch (error) {
     throw new Error("could'nt find a product");
   }
+};
+export const addProduct = async (data: FormData) => {
+  connectToDB();
+  try {
+    const productData = Object.fromEntries(data);
+    const oldProduct = await ProductModel.findOne({ title: productData.title });
+    if (oldProduct) throw new Error("product already exist");
+    const newProduct = new ProductModel(productData);
+    await newProduct.save();
+  } catch (error) {
+    throw new Error("could'nt add a new product");
+  }
+  redirect("/dashboard/products");
+};
+export const updateProduct = async (data: FormData, id: string) => {
+  connectToDB();
+  try {
+    const productData = Object.fromEntries(data);
+    await ProductModel.findByIdAndUpdate(id, productData);
+  } catch (error) {
+    throw new Error("could'nt update a product");
+  }
+  redirect("/dashboard/products");
 };

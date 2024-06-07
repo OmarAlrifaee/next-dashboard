@@ -1,4 +1,4 @@
-import { getOneProduct } from "@/actions/products";
+import { getOneProduct, updateProduct } from "@/actions/products";
 import { ProductType } from "@/types";
 import Image from "next/image";
 type Props = {
@@ -17,7 +17,13 @@ const ProductDetails = async ({ params }: Props) => {
         <p className="mt-3 font-semibold">{product.title}</p>
       </div>
       <div className="flex-grow bg-main-soft-bg p-[10px] rounded-md mt-[20px]">
-        <form action="" className="flex flex-col gap-5">
+        <form
+          action={async (data) => {
+            "use server";
+            await updateProduct(data, product.id);
+          }}
+          className="flex flex-col gap-5"
+        >
           <input
             type="text"
             placeholder={product.title}
@@ -30,30 +36,35 @@ const ProductDetails = async ({ params }: Props) => {
             type="number"
             placeholder={product.price.toString()}
             name="price"
+            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
           <input
             type="number"
             placeholder={product.stock.toString()}
             name="stock"
+            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
           <input
             type="text"
             placeholder={product.color}
             name="color"
+            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
           <input
             type="text"
             placeholder={product.size}
             name="size"
+            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
           <input
             type="text"
             placeholder={product.desc}
             name="desc"
+            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
           <select

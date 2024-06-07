@@ -35,8 +35,8 @@ const UserTable = ({ user }: Props) => {
           </td>
           <td>{user.email}</td>
           <td>{user.createdAt?.toLocaleDateString()}</td>
-          <td>{user.isAdmin ? "Admin" : "Not Admin"}</td>
-          <td>{user.isActive ? "Active" : "Not Active"}</td>
+          <td>{user.isAdmin === "true" ? "Admin" : "Not Admin"}</td>
+          <td>{user.isActive === "true" ? "Active" : "Not Active"}</td>
           <td>
             <div className="flex items-center justify-center gap-[20px]">
               <Link href={`/dashboard/users/${user.id}`}>

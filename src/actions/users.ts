@@ -1,7 +1,9 @@
 "use server";
 import { connectToDB } from "@/models/connection";
+import { ProductModel } from "@/models/products";
 import { UserModel } from "@/models/users";
 import { UserType } from "@/types";
+import { redirect } from "next/navigation";
 
 export const getAllUsers = async () => {
   connectToDB();
@@ -28,4 +30,27 @@ export const getOneUser = async (id: string) => {
   } catch (error) {
     throw new Error("could'nt find a user");
   }
+};
+export const addUser = async (data: FormData) => {
+  connectToDB();
+  try {
+    const userData = Object.fromEntries(data);
+    const oldUser = await UserModel.findOne({ email: userData.email });
+    if (oldUser) throw new Error("product already exist");
+    const newUser = new UserModel(userData);
+    await newUser.save();
+  } catch (error) {
+    throw new Error("could'nt add a new user");
+  }
+  redirect("/dashboard/users");
+};
+export const updateUser = async (data: FormData, id: string) => {
+  connectToDB();
+  try {
+    const userData = Object.fromEntries(data);
+    await UserModel.findByIdAndUpdate(id, userData);
+  } catch (error) {
+    throw new Error("could'nt update a user");
+  }
+  redirect("/dashboard/users");
 };

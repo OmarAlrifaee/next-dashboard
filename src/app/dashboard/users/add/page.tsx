@@ -1,7 +1,9 @@
+import { addUser } from "@/actions/users";
+
 const AddUser = () => {
   return (
     <div className="bg-main-soft-bg p-[10px] rounded-md mt-[20px]">
-      <form action="">
+      <form action={addUser}>
         <div className="grid grid-cols-2 gap-x-5 gap-y-10">
           <input
             type="text"

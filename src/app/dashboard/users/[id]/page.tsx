@@ -1,6 +1,6 @@
 import { UserType } from "@/types";
 import Image from "next/image";
-import { getOneUser } from "@/actions/users";
+import { getOneUser, updateUser } from "@/actions/users";
 type Props = {
   params: {
     id: string;
@@ -17,7 +17,13 @@ const UserDetails = async ({ params }: Props) => {
         <p className="mt-3 font-semibold">{user.username}</p>
       </div>
       <div className="flex-grow bg-main-soft-bg p-[10px] rounded-md mt-[20px]">
-        <form action="" className="flex flex-col gap-5">
+        <form
+          action={async (data) => {
+            "use server";
+            await updateUser(data, user.id);
+          }}
+          className="flex flex-col gap-5"
+        >
           <input
             type="text"
             placeholder={user.username}

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ProductType } from "@/types";
-import { deleteProductAction } from "@/actions/products";
+import { deleteProduct } from "@/actions/products";
 type Props = {
   product: ProductType;
 }; //  correct the category faild
@@ -29,7 +29,7 @@ const ProductsTable = ({ product }: Props) => {
                 height={40}
                 className="object-cover rounded-full"
               />
-              <span>laptop</span>
+              <span>{product.title}</span>
             </div>
           </td>
           <td>{product.desc}</td>
@@ -46,7 +46,7 @@ const ProductsTable = ({ product }: Props) => {
               <form
                 action={async () => {
                   "use server";
-                  deleteProductAction(product.id);
+                  deleteProduct(product.id);
                 }}
               >
                 <button className="bg-[crimson] py-[5px] px-[10px] rounded-sm border-none cursor-pointer">
