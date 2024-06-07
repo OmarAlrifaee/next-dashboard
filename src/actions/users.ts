@@ -3,6 +3,7 @@ import { connectToDB } from "@/models/connection";
 import { ProductModel } from "@/models/products";
 import { UserModel } from "@/models/users";
 import { UserType } from "@/types";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const getAllUsers = async () => {
@@ -14,13 +15,14 @@ export const getAllUsers = async () => {
     throw new Error("faild to fetch all users");
   }
 };
-export const deleteUserAction = async (id: string) => {
+export const deleteUser = async (id: string) => {
   connectToDB();
   try {
     await UserModel.findByIdAndDelete(id);
   } catch (error) {
     throw new Error("could'nt delete a user");
   }
+  revalidatePath("/dashboard/users");
 };
 export const getOneUser = async (id: string) => {
   connectToDB();
@@ -42,6 +44,7 @@ export const addUser = async (data: FormData) => {
   } catch (error) {
     throw new Error("could'nt add a new user");
   }
+  revalidatePath("/dashboard/users");
   redirect("/dashboard/users");
 };
 export const updateUser = async (data: FormData, id: string) => {
@@ -52,5 +55,6 @@ export const updateUser = async (data: FormData, id: string) => {
   } catch (error) {
     throw new Error("could'nt update a user");
   }
+  revalidatePath("/dashboard/users");
   redirect("/dashboard/users");
 };

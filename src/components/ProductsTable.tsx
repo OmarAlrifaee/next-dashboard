@@ -46,9 +46,10 @@ const ProductsTable = ({ product }: Props) => {
               <form
                 action={async () => {
                   "use server";
-                  deleteProduct(product.id);
+                  await deleteProduct(product.id);
                 }}
               >
+                <input type="hidden" name="id" value={product.id} />
                 <button className="bg-[crimson] py-[5px] px-[10px] rounded-sm border-none cursor-pointer">
                   Delete
                 </button>

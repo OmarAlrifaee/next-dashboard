@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { UserType } from "@/types";
-import { deleteUserAction } from "@/actions/users";
+import { deleteUser } from "@/actions/users";
 
 type Props = {
   user: UserType;
@@ -47,7 +47,7 @@ const UserTable = ({ user }: Props) => {
               <form
                 action={async () => {
                   "use server";
-                  await deleteUserAction(user.id);
+                  await deleteUser(user.id);
                 }}
               >
                 <button className="bg-[crimson] py-[5px] px-[10px] rounded-sm border-none cursor-pointer">

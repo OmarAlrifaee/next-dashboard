@@ -2,6 +2,7 @@
 import { connectToDB } from "@/models/connection";
 import { ProductModel } from "@/models/products";
 import { ProductType } from "@/types";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const getAllProducts = async () => {
@@ -20,6 +21,7 @@ export const deleteProduct = async (id: string) => {
   } catch (error) {
     throw new Error("could'nt delete a product");
   }
+  revalidatePath("/dashboard/products");
 };
 export const getOneProduct = async (id: string) => {
   connectToDB();
@@ -41,6 +43,7 @@ export const addProduct = async (data: FormData) => {
   } catch (error) {
     throw new Error("could'nt add a new product");
   }
+  revalidatePath("/dashboard/products");
   redirect("/dashboard/products");
 };
 export const updateProduct = async (data: FormData, id: string) => {
@@ -51,5 +54,6 @@ export const updateProduct = async (data: FormData, id: string) => {
   } catch (error) {
     throw new Error("could'nt update a product");
   }
+  revalidatePath("/dashboard/products");
   redirect("/dashboard/products");
 };
