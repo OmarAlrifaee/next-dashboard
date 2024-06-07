@@ -33,7 +33,7 @@ const ProductsTable = () => {
           <td>72</td>
           <td>
             <div className="flex items-center justify-center gap-[20px]">
-              <Link href={"/"}>
+              <Link href={`/dashboard/products/${1}`}>
                 <button className="bg-[teal] py-[5px] px-[10px] rounded-sm border-none cursor-pointer">
                   View
                 </button>
