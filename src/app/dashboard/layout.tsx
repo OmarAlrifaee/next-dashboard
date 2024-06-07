@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import SmallSideBar from "@/components/SmallSideBar";
@@ -12,6 +13,7 @@ const DashboardLayout = ({ children }: Props) => {
       <div className="flex-[4] p-5">
         <Navbar />
         {children}
+        <Footer />
       </div>
     </section>
   );

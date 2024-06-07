@@ -1,21 +1,96 @@
 "use client";
 import { MdLogout, MdMenu } from "react-icons/md";
-import { menuItems } from "./sidebar-data";
 import SidebarLink from "./SidebarLink";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaXmark } from "react-icons/fa6";
 import { usePathname } from "next/navigation";
+import {
+  MdDashboard,
+  MdSupervisedUserCircle,
+  MdShoppingBag,
+  MdAttachMoney,
+  MdWork,
+  MdAnalytics,
+  MdPeople,
+  MdOutlineSettings,
+  MdHelpCenter,
+} from "react-icons/md";
 const SmallSideBar = () => {
   const [open, setOpen] = useState(true);
   const pathname = usePathname();
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+  const menuItems = useMemo(
+    () => [
+      {
+        title: "Pages",
+        list: [
+          {
+            title: "Dashboard",
+            path: "/dashboard",
+            icon: <MdDashboard />,
+          },
+          {
+            title: "Users",
+            path: "/dashboard/users",
+            icon: <MdSupervisedUserCircle />,
+          },
+          {
+            title: "Products",
+            path: "/dashboard/products",
+            icon: <MdShoppingBag />,
+          },
+          {
+            title: "Transactions",
+            path: "/dashboard/transactions",
+            icon: <MdAttachMoney />,
+          },
+        ],
+      },
+      {
+        title: "Analytics",
+        list: [
+          {
+            title: "Revenue",
+            path: "/dashboard/revenue",
+            icon: <MdWork />,
+          },
+          {
+            title: "Reports",
+            path: "/dashboard/reports",
+            icon: <MdAnalytics />,
+          },
+          {
+            title: "Teams",
+            path: "/dashboard/teams",
+            icon: <MdPeople />,
+          },
+        ],
+      },
+      {
+        title: "User",
+        list: [
+          {
+            title: "Settings",
+            path: "/dashboard/settings",
+            icon: <MdOutlineSettings />,
+          },
+          {
+            title: "Help",
+            path: "/dashboard/help",
+            icon: <MdHelpCenter />,
+          },
+        ],
+      },
+    ],
+    []
+  );
   return (
     <div className="md:hidden block">
       <button
-        className="z-20 absolute right-[50px] top-[100px]"
+        className="z-20 absolute right-[30px] top-[100px]"
         onClick={() => setOpen((prev) => !prev)}
       >
         {open ? <FaXmark size={30} /> : <MdMenu size={30} />}
