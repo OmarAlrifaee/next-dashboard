@@ -5,14 +5,20 @@ import { ProductType } from "@/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const getAllProducts = async (q: string) => {
+export const getAllProducts = async (q: string, page: string) => {
   try {
     connectToDB();
     const regex = new RegExp(q, "i");
+    const product_per_page = 2;
+    const count = await ProductModel.find({
+      title: { $regex: regex },
+    }).countDocuments();
     const products: ProductType[] = await ProductModel.find({
       title: { $regex: regex },
-    });
-    return products;
+    })
+      .limit(product_per_page)
+      .skip(product_per_page * (parseInt(page) - 1));
+    return { products, count };
   } catch (error) {
     throw new Error("faild to fetch all products");
   }

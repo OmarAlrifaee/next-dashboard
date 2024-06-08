@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { MdSearch } from "react-icons/md";
 
 type Props = {
@@ -11,10 +12,17 @@ const Search = ({ placeHolder, href }: Props) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  useEffect(() => {
+    // to reset the page query when ever the pathname changes
+    const params = new URLSearchParams(searchParams);
+    params.set("page", "1");
+    replace(`${pathname}?${params}`);
+  }, []);
   const hundleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(searchParams);
     if (e.target.value) {
       params.set("q", e.target.value);
+      params.set("page", "1");
     } else {
       params.delete("q");
     }

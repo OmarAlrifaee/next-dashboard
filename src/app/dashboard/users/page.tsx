@@ -7,10 +7,14 @@ import { Suspense } from "react";
 type Props = {
   searchParams: {
     q: string;
+    page: string;
   };
 };
 const Users = async ({ searchParams }: Props) => {
-  const users = await getAllUsers(searchParams.q || "");
+  const { users, count } = await getAllUsers(
+    searchParams.q || "",
+    searchParams.page || "1"
+  );
   return (
     <section className="bg-main-soft-bg">
       <Search placeHolder="Search For A User" href="/dashboard/users/add" />
@@ -19,7 +23,7 @@ const Users = async ({ searchParams }: Props) => {
           <UserTable user={user} />
         </Suspense>
       ))}
-      <Pagination />
+      <Pagination count={count} />
     </section>
   );
 };

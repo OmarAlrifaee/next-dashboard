@@ -5,14 +5,20 @@ import { UserType } from "@/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const getAllUsers = async (q: string) => {
+export const getAllUsers = async (q: string, page: string) => {
   try {
     connectToDB();
+    const user_per_page = 2;
     const regex = new RegExp(q, "i");
+    const count = await UserModel.find({
+      username: { $regex: regex },
+    }).countDocuments();
     const users: UserType[] = await UserModel.find({
       username: { $regex: regex },
-    });
-    return users;
+    })
+      .limit(user_per_page) // make a limit for the users
+      .skip(user_per_page * (parseInt(page) - 1)); // for example 2 * 0 so i wont skip any users but if its page 2 ill skip the first tow and show the second tow
+    return { users, count };
   } catch (error) {
     throw new Error("faild to fetch all users");
   }

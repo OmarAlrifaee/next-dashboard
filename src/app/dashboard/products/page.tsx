@@ -7,10 +7,14 @@ import { Suspense } from "react";
 type Props = {
   searchParams: {
     q: string;
+    page: string;
   };
 };
 const Products = async ({ searchParams }: Props) => {
-  const products = await getAllProducts(searchParams.q || "");
+  const { count, products } = await getAllProducts(
+    searchParams.q || "",
+    searchParams.page || "1"
+  );
   return (
     <section className="bg-main-soft-bg mt-5">
       <Search
@@ -22,7 +26,7 @@ const Products = async ({ searchParams }: Props) => {
           <ProductsTable product={product} />
         </Suspense>
       ))}
-      <Pagination />
+      <Pagination count={count} />
     </section>
   );
 };
