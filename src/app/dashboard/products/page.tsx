@@ -1,7 +1,7 @@
 import { getAllProducts } from "@/actions/products";
 import Loader from "@/components/Loader";
 import Pagination from "@/components/Pagination";
-import ProductsTable from "@/components/ProductsTable";
+import ProductRow from "@/components/ProductRow";
 import Search from "@/components/Search";
 import { Metadata } from "next";
 import { Suspense } from "react";
@@ -22,11 +22,25 @@ const Products = async ({ searchParams }: Props) => {
         placeHolder="Search For A Product"
         href="/dashboard/products/add"
       />
-      {products.map((product) => (
-        <Suspense key={product.id} fallback={<Loader />}>
-          <ProductsTable product={product} />
-        </Suspense>
-      ))}
+      <table className="w-full mt-5">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Created At</th>
+            <th>Stock</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody className="text-center">
+          {products.map((product) => (
+            <Suspense key={product.id} fallback={<Loader />}>
+              <ProductRow product={product} />
+            </Suspense>
+          ))}
+        </tbody>
+      </table>
       <Pagination count={count} />
     </section>
   );
