@@ -1,23 +1,25 @@
 "use server";
 import { connectToDB } from "@/models/connection";
-import { ProductModel } from "@/models/products";
 import { UserModel } from "@/models/users";
 import { UserType } from "@/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const getAllUsers = async () => {
-  connectToDB();
+export const getAllUsers = async (q: string) => {
   try {
-    const users: UserType[] = await UserModel.find();
+    connectToDB();
+    const regex = new RegExp(q, "i");
+    const users: UserType[] = await UserModel.find({
+      username: { $regex: regex },
+    });
     return users;
   } catch (error) {
     throw new Error("faild to fetch all users");
   }
 };
 export const deleteUser = async (id: string) => {
-  connectToDB();
   try {
+    connectToDB();
     await UserModel.findByIdAndDelete(id);
   } catch (error) {
     throw new Error("could'nt delete a user");
@@ -25,8 +27,8 @@ export const deleteUser = async (id: string) => {
   revalidatePath("/dashboard/users");
 };
 export const getOneUser = async (id: string) => {
-  connectToDB();
   try {
+    connectToDB();
     const user: UserType | null = await UserModel.findById(id);
     if (user) return user;
   } catch (error) {
@@ -34,8 +36,8 @@ export const getOneUser = async (id: string) => {
   }
 };
 export const addUser = async (data: FormData) => {
-  connectToDB();
   try {
+    connectToDB();
     const userData = Object.fromEntries(data);
     const oldUser = await UserModel.findOne({ email: userData.email });
     if (oldUser) throw new Error("product already exist");
@@ -48,8 +50,8 @@ export const addUser = async (data: FormData) => {
   redirect("/dashboard/users");
 };
 export const updateUser = async (data: FormData, id: string) => {
-  connectToDB();
   try {
+    connectToDB();
     const userData = Object.fromEntries(data);
     await UserModel.findByIdAndUpdate(id, userData);
   } catch (error) {

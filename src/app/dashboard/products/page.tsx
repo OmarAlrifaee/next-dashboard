@@ -3,9 +3,13 @@ import Pagination from "@/components/Pagination";
 import ProductsTable from "@/components/ProductsTable";
 import Search from "@/components/Search";
 import { Metadata } from "next";
-
-const Products = async () => {
-  const products = await getAllProducts();
+type Props = {
+  searchParams: {
+    q: string;
+  };
+};
+const Products = async ({ searchParams }: Props) => {
+  const products = await getAllProducts(searchParams.q || "");
   return (
     <section className="bg-main-soft-bg mt-5">
       <Search

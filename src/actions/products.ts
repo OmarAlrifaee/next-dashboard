@@ -5,18 +5,21 @@ import { ProductType } from "@/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const getAllProducts = async () => {
-  connectToDB();
+export const getAllProducts = async (q: string) => {
   try {
-    const products: ProductType[] = await ProductModel.find();
+    connectToDB();
+    const regex = new RegExp(q, "i");
+    const products: ProductType[] = await ProductModel.find({
+      title: { $regex: regex },
+    });
     return products;
   } catch (error) {
     throw new Error("faild to fetch all products");
   }
 };
 export const deleteProduct = async (id: string) => {
-  connectToDB();
   try {
+    connectToDB();
     await ProductModel.findByIdAndDelete(id);
   } catch (error) {
     throw new Error("could'nt delete a product");
@@ -24,8 +27,8 @@ export const deleteProduct = async (id: string) => {
   revalidatePath("/dashboard/products");
 };
 export const getOneProduct = async (id: string) => {
-  connectToDB();
   try {
+    connectToDB();
     const product: ProductType | null = await ProductModel.findById(id);
     if (product) return product;
   } catch (error) {
@@ -33,8 +36,8 @@ export const getOneProduct = async (id: string) => {
   }
 };
 export const addProduct = async (data: FormData) => {
-  connectToDB();
   try {
+    connectToDB();
     const productData = Object.fromEntries(data);
     const oldProduct = await ProductModel.findOne({ title: productData.title });
     if (oldProduct) throw new Error("product already exist");
@@ -47,8 +50,8 @@ export const addProduct = async (data: FormData) => {
   redirect("/dashboard/products");
 };
 export const updateProduct = async (data: FormData, id: string) => {
-  connectToDB();
   try {
+    connectToDB();
     const productData = Object.fromEntries(data);
     await ProductModel.findByIdAndUpdate(id, productData);
   } catch (error) {

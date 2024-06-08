@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { MdSearch } from "react-icons/md";
 
 type Props = {
@@ -6,6 +8,18 @@ type Props = {
   href: string;
 };
 const Search = ({ placeHolder, href }: Props) => {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const hundleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const params = new URLSearchParams(searchParams);
+    if (e.target.value) {
+      params.set("q", e.target.value);
+    } else {
+      params.delete("q");
+    }
+    replace(`${pathname}?${params}`);
+  };
   return (
     <div className="flex items-center justify-between mt-[20px] p-[10px] rounded-md ">
       <div className="flex items-center gap-[10px] bg-[#2e374a] p-[10px] rounded-md w-fit">
@@ -14,6 +28,7 @@ const Search = ({ placeHolder, href }: Props) => {
           type="text"
           placeholder={placeHolder}
           className="bg-transparent border-none text-white outline-none focus:outline-none"
+          onChange={hundleSearch}
         />
       </div>
       <Link href={href}>
