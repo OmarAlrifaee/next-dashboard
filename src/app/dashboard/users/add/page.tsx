@@ -27,6 +27,12 @@ const AddUser = () => {
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold "
           />
           <input
+            type="text"
+            placeholder="Avatar Url"
+            name="avatar"
+            className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold "
+          />
+          <input
             type="number"
             placeholder="Phone"
             name="phone"

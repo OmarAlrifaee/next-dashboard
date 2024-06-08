@@ -3,6 +3,7 @@ import Pagination from "@/components/Pagination";
 import ProductsTable from "@/components/ProductsTable";
 import Search from "@/components/Search";
 import { Metadata } from "next";
+import { Suspense } from "react";
 type Props = {
   searchParams: {
     q: string;
@@ -17,7 +18,9 @@ const Products = async ({ searchParams }: Props) => {
         href="/dashboard/products/add"
       />
       {products.map((product) => (
-        <ProductsTable product={product} key={product.id} />
+        <Suspense key={product.id}>
+          <ProductsTable product={product} />
+        </Suspense>
       ))}
       <Pagination />
     </section>
