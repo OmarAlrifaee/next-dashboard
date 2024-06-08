@@ -4,6 +4,7 @@ import { UserModel } from "@/models/users";
 import { UserType } from "@/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import bcrypt from "bcryptjs";
 
 export const getAllUsers = async (q: string, page: string) => {
   try {
@@ -47,8 +48,14 @@ export const addUser = async (data: FormData) => {
     const userData = Object.fromEntries(data);
     const oldUser = await UserModel.findOne({ email: userData.email });
     if (oldUser) throw new Error("product already exist");
-    const newUser = new UserModel(userData);
+    var salt = bcrypt.genSaltSync(10);
+    const hashedPassword = await bcrypt.hash(
+      userData?.password as string,
+      salt
+    );
+    const newUser = new UserModel({ ...userData, password: hashedPassword });
     await newUser.save();
+    console.log(newUser);
   } catch (error) {
     throw new Error("could'nt add a new user");
   }
