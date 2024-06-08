@@ -1,4 +1,5 @@
 import { getAllUsers } from "@/actions/users";
+import Loader from "@/components/Loader";
 import Pagination from "@/components/Pagination";
 import Search from "@/components/Search";
 import UserTable from "@/components/UserTable";
@@ -19,7 +20,7 @@ const Users = async ({ searchParams }: Props) => {
     <section className="bg-main-soft-bg">
       <Search placeHolder="Search For A User" href="/dashboard/users/add" />
       {users.map((user) => (
-        <Suspense key={user.id}>
+        <Suspense key={user.id} fallback={<Loader />}>
           <UserTable user={user} />
         </Suspense>
       ))}

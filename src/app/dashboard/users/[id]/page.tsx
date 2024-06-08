@@ -28,21 +28,18 @@ const UserDetails = async ({ params }: Props) => {
             type="text"
             placeholder={user.username}
             name="username"
-            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold "
           />
           <input
             type="email"
             placeholder={user.email}
             name="email"
-            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold "
           />
           <input
             type="password"
             placeholder="Password"
             name="password"
-            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold "
           />
           <input
@@ -55,7 +52,6 @@ const UserDetails = async ({ params }: Props) => {
             type="text"
             placeholder={user.address}
             name="address"
-            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold "
           />
           <select

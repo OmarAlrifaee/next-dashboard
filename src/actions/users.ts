@@ -59,6 +59,13 @@ export const updateUser = async (data: FormData, id: string) => {
   try {
     connectToDB();
     const userData = Object.fromEntries(data);
+    // remove any key with an empty value or undifined
+    // to prevent assign it to the database as an undifined faild
+    Object.keys(userData).map(
+      (key) =>
+        (userData[key] === "" || userData[key] === undefined) &&
+        delete userData[key]
+    );
     await UserModel.findByIdAndUpdate(id, userData);
   } catch (error) {
     throw new Error("could'nt update a user");

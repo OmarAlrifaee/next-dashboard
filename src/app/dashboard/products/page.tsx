@@ -1,4 +1,5 @@
 import { getAllProducts } from "@/actions/products";
+import Loader from "@/components/Loader";
 import Pagination from "@/components/Pagination";
 import ProductsTable from "@/components/ProductsTable";
 import Search from "@/components/Search";
@@ -22,7 +23,7 @@ const Products = async ({ searchParams }: Props) => {
         href="/dashboard/products/add"
       />
       {products.map((product) => (
-        <Suspense key={product.id}>
+        <Suspense key={product.id} fallback={<Loader />}>
           <ProductsTable product={product} />
         </Suspense>
       ))}

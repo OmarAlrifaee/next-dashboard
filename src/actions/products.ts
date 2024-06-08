@@ -59,6 +59,13 @@ export const updateProduct = async (data: FormData, id: string) => {
   try {
     connectToDB();
     const productData = Object.fromEntries(data);
+    // remove any key with an empty value or undifined
+    // to prevent assign it to the database as an undifined faild
+    Object.keys(productData).map(
+      (key) =>
+        (productData[key] === "" || productData[key] === undefined) &&
+        delete productData[key]
+    );
     await ProductModel.findByIdAndUpdate(id, productData);
   } catch (error) {
     throw new Error("could'nt update a product");

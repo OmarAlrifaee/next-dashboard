@@ -28,7 +28,6 @@ const ProductDetails = async ({ params }: Props) => {
             type="text"
             placeholder={product.title}
             name="title"
-            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
 
@@ -36,35 +35,30 @@ const ProductDetails = async ({ params }: Props) => {
             type="number"
             placeholder={product.price.toString()}
             name="price"
-            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
           <input
             type="number"
             placeholder={product.stock.toString()}
             name="stock"
-            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
           <input
             type="text"
             placeholder={product.color}
             name="color"
-            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
           <input
             type="text"
             placeholder={product.size}
             name="size"
-            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
           <input
             type="text"
             placeholder={product.desc}
             name="desc"
-            required
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
           />
           <input
