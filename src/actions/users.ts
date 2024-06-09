@@ -136,7 +136,7 @@ export const getCurrentUser = async () => {
   try {
     connectToDB();
     const token = cookies().get("token")?.value;
-    const decoded = jwt.verify(token!, process.env.TOKEN_SECRET!);
+    const decoded: any = jwt.verify(token!, process.env.TOKEN_SECRET!);
     const currentUser = await UserModel.findOne({ email: decoded?.email });
     return currentUser;
   } catch (error) {

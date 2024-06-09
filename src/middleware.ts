@@ -3,6 +3,10 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
+  // redirect the user to dashboard cuz we don't have home page
+  if (path === "/") {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
   // check if the request from a public path
   const publicPaths = ["/login"];
   let isPublicPath = false;
@@ -14,7 +18,7 @@ export function middleware(request: NextRequest) {
   // now check if the request is to public path |and| the token is exist
   if (isPublicPath && token) {
     // i should redirect the user to the home page cuz he already authrized
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
   /* 
     here check if the request is not to a public path |and| the token is not exist 

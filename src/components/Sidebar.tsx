@@ -14,9 +14,14 @@ import {
 } from "react-icons/md";
 import { getCurrentUser, logout } from "@/actions/users";
 import { UserType } from "@/types";
+import { cookies } from "next/headers";
 
 const Sidebar = async () => {
-  const user: UserType = await getCurrentUser();
+  // to prevent a preredering error cuz next will prefetch the currentUser but there is no token before login
+  let user: UserType | undefined = undefined;
+  if (cookies().get("token")?.value) {
+    user = await getCurrentUser();
+  }
   const menuItems = [
     {
       title: "Pages",
@@ -83,16 +88,16 @@ const Sidebar = async () => {
     <section className="flex-1 bg-main-soft-bg p-5 md:block hidden">
       <div className="flex items-center gap-[20px] mt-[20px]">
         <Image
-          src={user.avatar || "/noavatar.png"}
-          alt={user.username + "image"}
+          src={user?.avatar || "/noavatar.png"}
+          alt={user?.username + "image"}
           width={"50"}
           height={"50"}
           className="object-cover rounded-full"
         />
         <div className="flex flex-col">
-          <span className="font-[500]">{user.username}</span>
+          <span className="font-[500]">{user?.username}</span>
           <span className="text-[12px] text-soft-text">
-            {user.isAdmin === "true" ? "admin" : "not admin"}
+            {user?.isAdmin === "true" ? "admin" : "not admin"}
           </span>
         </div>
       </div>

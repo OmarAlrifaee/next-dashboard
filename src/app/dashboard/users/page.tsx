@@ -1,5 +1,4 @@
 import { getAllUsers } from "@/actions/users";
-import Loader from "@/components/Loader";
 import Pagination from "@/components/Pagination";
 import Search from "@/components/Search";
 import UserRow from "@/components/UserRow";
