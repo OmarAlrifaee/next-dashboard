@@ -4,11 +4,11 @@ import { ProductType } from "@/types";
 import { deleteProduct } from "@/actions/products";
 type Props = {
   product: ProductType;
-}; //  correct the category faild
+};
 const ProductRow = ({ product }: Props) => {
   return (
     <tr>
-      <td>
+      <td className="p-3">
         <div className="flex items-center justify-center gap-[10px]">
           <Image
             src={product.img || "/noproduct.jpg"}
@@ -20,11 +20,11 @@ const ProductRow = ({ product }: Props) => {
           <span>{product.title}</span>
         </div>
       </td>
-      <td>{product.desc}</td>
-      <td>${product.price}</td>
-      <td>{product.createdAt?.toLocaleDateString()}</td>
-      <td>{product.stock}</td>
-      <td>
+      <td className="p-3">{product.desc}</td>
+      <td className="p-3">${product.price}</td>
+      <td className="p-3">{product.createdAt?.toLocaleDateString()}</td>
+      <td className="p-3">{product.stock}</td>
+      <td className="p-3">
         <div className="flex items-center justify-center gap-[20px]">
           <Link href={`/dashboard/products/${product.id}`}>
             <button className="bg-[teal] py-[5px] px-[10px] rounded-sm border-none cursor-pointer">
@@ -37,7 +37,6 @@ const ProductRow = ({ product }: Props) => {
               await deleteProduct(product.id);
             }}
           >
-            <input type="hidden" name="id" value={product.id} />
             <button className="bg-[crimson] py-[5px] px-[10px] rounded-sm border-none cursor-pointer">
               Delete
             </button>

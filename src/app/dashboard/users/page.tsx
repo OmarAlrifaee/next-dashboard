@@ -4,7 +4,7 @@ import Pagination from "@/components/Pagination";
 import Search from "@/components/Search";
 import UserRow from "@/components/UserRow";
 import { Metadata } from "next";
-import { Suspense } from "react";
+
 type Props = {
   searchParams: {
     q: string;
@@ -32,9 +32,7 @@ const Users = async ({ searchParams }: Props) => {
         </thead>
         <tbody className="text-center">
           {users.map((user) => (
-            <Suspense key={user.id} fallback={<Loader />}>
-              <UserRow user={user} />
-            </Suspense>
+            <UserRow user={user} key={user.id} />
           ))}
         </tbody>
       </table>

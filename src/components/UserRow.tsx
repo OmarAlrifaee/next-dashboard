@@ -9,7 +9,7 @@ type Props = {
 const UserRow = ({ user }: Props) => {
   return (
     <tr>
-      <td>
+      <td className="p-3">
         <div className="flex items-center justify-center gap-[10px]">
           <Image
             src={user.avatar || "/noavatar.png"}
@@ -21,11 +21,13 @@ const UserRow = ({ user }: Props) => {
           <span>{user.username}</span>
         </div>
       </td>
-      <td>{user.email}</td>
-      <td>{user.createdAt?.toLocaleDateString()}</td>
-      <td>{user.isAdmin === "true" ? "Admin" : "Not Admin"}</td>
-      <td>{user.isActive === "true" ? "Active" : "Not Active"}</td>
-      <td>
+      <td className="p-3">{user.email}</td>
+      <td className="p-3">{user.createdAt?.toLocaleDateString()}</td>
+      <td className="p-3">{user.isAdmin === "true" ? "Admin" : "Not Admin"}</td>
+      <td className="p-3">
+        {user.isActive === "true" ? "Active" : "Not Active"}
+      </td>
+      <td className="p-3">
         <div className="flex items-center justify-center gap-[20px]">
           <Link href={`/dashboard/users/${user.id}`}>
             <button className="bg-[teal] py-[5px] px-[10px] rounded-sm border-none cursor-pointer">

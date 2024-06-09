@@ -1,10 +1,8 @@
 import { getAllProducts } from "@/actions/products";
-import Loader from "@/components/Loader";
 import Pagination from "@/components/Pagination";
 import ProductRow from "@/components/ProductRow";
 import Search from "@/components/Search";
 import { Metadata } from "next";
-import { Suspense } from "react";
 type Props = {
   searchParams: {
     q: string;
@@ -35,9 +33,7 @@ const Products = async ({ searchParams }: Props) => {
         </thead>
         <tbody className="text-center">
           {products.map((product) => (
-            <Suspense key={product.id} fallback={<Loader />}>
-              <ProductRow product={product} />
-            </Suspense>
+            <ProductRow product={product} key={product.id} />
           ))}
         </tbody>
       </table>
