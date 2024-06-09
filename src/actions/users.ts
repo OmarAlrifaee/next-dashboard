@@ -5,7 +5,8 @@ import { UserType } from "@/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
-
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 export const getAllUsers = async (q: string, page: string) => {
   try {
     connectToDB();
@@ -79,4 +80,66 @@ export const updateUser = async (data: FormData, id: string) => {
   }
   revalidatePath("/dashboard/users");
   redirect("/dashboard/users");
+};
+export const login = async (data: FormData) => {
+  try {
+    // connect to db
+    connectToDB();
+    const { email, password } = Object.fromEntries(data);
+    // check if there is a user
+    const user = await UserModel.findOne({ email });
+    if (!user.email) {
+      throw new Error("user not found");
+    }
+    // check if password is correct
+    const isPasswordValid = await bcrypt.compare(
+      password as string,
+      user.password
+    );
+    if (!isPasswordValid) {
+      throw new Error("password not valid");
+    }
+    // check if the user is admin
+    if (!(user.isAdmin === "true")) {
+      throw new Error("user is not admin");
+    }
+    // create a jwt
+    const tokenData = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+    };
+    const token = jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
+      expiresIn: "1d",
+    });
+    cookies().set("token", token, { httpOnly: true });
+    console.log("login successfully");
+  } catch (error: any) {
+    console.log(error.message);
+  }
+  redirect("/dashboard");
+};
+export const logout = async () => {
+  try {
+    // remove the token from the cookies
+    cookies().set("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+    });
+    console.log("logged out successfully");
+  } catch (error: any) {
+    console.log(error.message);
+  }
+  redirect("/login");
+};
+export const getCurrentUser = async () => {
+  try {
+    connectToDB();
+    const token = cookies().get("token")?.value;
+    const decoded = jwt.verify(token!, process.env.TOKEN_SECRET!);
+    const currentUser = await UserModel.findOne({ email: decoded?.email });
+    return currentUser;
+  } catch (error) {
+    throw new Error("could'nt get the current user from token");
+  }
 };

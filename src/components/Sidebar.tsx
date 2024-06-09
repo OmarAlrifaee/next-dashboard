@@ -12,8 +12,11 @@ import {
   MdOutlineSettings,
   MdHelpCenter,
 } from "react-icons/md";
+import { getCurrentUser, logout } from "@/actions/users";
+import { UserType } from "@/types";
 
-const Sidebar = () => {
+const Sidebar = async () => {
+  const user: UserType = await getCurrentUser();
   const menuItems = [
     {
       title: "Pages",
@@ -80,15 +83,17 @@ const Sidebar = () => {
     <section className="flex-1 bg-main-soft-bg p-5 md:block hidden">
       <div className="flex items-center gap-[20px] mt-[20px]">
         <Image
-          src={"/noavatar.png"}
-          alt=""
+          src={user.avatar || "/noavatar.png"}
+          alt={user.username + "image"}
           width={"50"}
           height={"50"}
           className="object-cover rounded-full"
         />
         <div className="flex flex-col">
-          <span className="font-[500]">user name</span>
-          <span className="text-[12px] text-soft-text">admin</span>
+          <span className="font-[500]">{user.username}</span>
+          <span className="text-[12px] text-soft-text">
+            {user.isAdmin === "true" ? "admin" : "not admin"}
+          </span>
         </div>
       </div>
       <ul className="mt-5">
@@ -105,7 +110,7 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <form action="">
+      <form action={logout}>
         <button className="w-full p-[10px] flex items-center gap-[10px] hover:bg-red-500 my-[5px] rounded-md">
           <MdLogout />
           Logout
