@@ -23,15 +23,15 @@ const Products = async ({ searchParams }: Props) => {
       <table className="w-full mt-5">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Created At</th>
-            <th>Stock</th>
-            <th>Action</th>
+            <td className="p-3">Title</td>
+            <td className="p-3">Description</td>
+            <td className="p-3">Price</td>
+            <td className="p-3">Created At</td>
+            <td className="p-3">Stock</td>
+            <td className="p-3">Action</td>
           </tr>
         </thead>
-        <tbody className="text-center">
+        <tbody>
           {products.map((product) => (
             <ProductRow product={product} key={product.id} />
           ))}

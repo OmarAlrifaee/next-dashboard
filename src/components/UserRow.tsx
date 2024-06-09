@@ -10,7 +10,7 @@ const UserRow = ({ user }: Props) => {
   return (
     <tr>
       <td className="p-3">
-        <div className="flex items-center justify-center gap-[10px]">
+        <div className="flex items-center gap-[10px]">
           <Image
             src={user.avatar || "/noavatar.png"}
             alt={`${user.username} image`}
@@ -28,7 +28,7 @@ const UserRow = ({ user }: Props) => {
         {user.isActive === "true" ? "Active" : "Not Active"}
       </td>
       <td className="p-3">
-        <div className="flex items-center justify-center gap-[20px]">
+        <div className="flex items-center gap-[20px]">
           <Link href={`/dashboard/users/${user.id}`}>
             <button className="bg-[teal] py-[5px] px-[10px] rounded-sm border-none cursor-pointer">
               View

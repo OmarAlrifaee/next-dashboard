@@ -22,15 +22,15 @@ const Users = async ({ searchParams }: Props) => {
       <table className="w-full mt-5">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Created At</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th>Action</th>
+            <td className="p-3">Name</td>
+            <td className="p-3">Email</td>
+            <td className="p-3">Created At</td>
+            <td className="p-3">Role</td>
+            <td className="p-3">Status</td>
+            <td className="p-3">Action</td>
           </tr>
         </thead>
-        <tbody className="text-center">
+        <tbody>
           {users.map((user) => (
             <UserRow user={user} key={user.id} />
           ))}

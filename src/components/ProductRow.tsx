@@ -9,7 +9,7 @@ const ProductRow = ({ product }: Props) => {
   return (
     <tr>
       <td className="p-3">
-        <div className="flex items-center justify-center gap-[10px]">
+        <div className="flex items-center gap-[10px]">
           <Image
             src={product.img || "/noproduct.jpg"}
             alt={product.title}
@@ -25,7 +25,7 @@ const ProductRow = ({ product }: Props) => {
       <td className="p-3">{product.createdAt?.toLocaleDateString()}</td>
       <td className="p-3">{product.stock}</td>
       <td className="p-3">
-        <div className="flex items-center justify-center gap-[20px]">
+        <div className="flex items-center gap-[20px]">
           <Link href={`/dashboard/products/${product.id}`}>
             <button className="bg-[teal] py-[5px] px-[10px] rounded-sm border-none cursor-pointer">
               View
