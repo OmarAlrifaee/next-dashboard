@@ -18,7 +18,7 @@ import { cookies } from "next/headers";
 
 const Sidebar = async () => {
   // to prevent a preredering error cuz next will prefetch the currentUser but there is no token before login
-  let user: UserType | undefined = undefined;
+  let user: UserType | null = null;
   if (cookies().get("token")?.value) {
     user = await getCurrentUser();
   }
