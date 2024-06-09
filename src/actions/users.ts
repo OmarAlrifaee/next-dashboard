@@ -115,7 +115,7 @@ export const login = async (data: FormData) => {
     cookies().set("token", token, { httpOnly: true });
     console.log("login successfully");
   } catch (error: any) {
-    console.log(error.message);
+    throw new Error("could'nt login user");
   }
   redirect("/dashboard");
 };
@@ -128,7 +128,7 @@ export const logout = async () => {
     });
     console.log("logged out successfully");
   } catch (error: any) {
-    console.log(error.message);
+    throw new Error("could'nt logout user");
   }
   redirect("/login");
 };
