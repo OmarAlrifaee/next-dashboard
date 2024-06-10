@@ -1,4 +1,5 @@
 import { getOneProduct, updateProduct } from "@/actions/products";
+import SubmitButton from "@/components/SubmitButton";
 import { ProductType } from "@/types";
 import Image from "next/image";
 type Props = {
@@ -94,12 +95,7 @@ const ProductDetails = async ({ params }: Props) => {
               Computer
             </option>
           </select>
-          <button
-            type="submit"
-            className="border-none w-full text-center text-white font-bold bg-teal-500 py-3 rounded-md mb-5"
-          >
-            Update
-          </button>
+          <SubmitButton title="Update Product" />
         </form>
       </div>
     </section>

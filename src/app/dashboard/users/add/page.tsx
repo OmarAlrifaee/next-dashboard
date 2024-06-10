@@ -1,4 +1,5 @@
 import { addUser } from "@/actions/users";
+import SubmitButton from "@/components/SubmitButton";
 
 const AddUser = () => {
   return (
@@ -76,12 +77,7 @@ const AddUser = () => {
             placeholder="Address"
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold  min-h-[200px]"
           ></textarea>
-          <button
-            type="submit"
-            className="border-none w-full text-center text-white font-bold bg-teal-500 py-3 rounded-md mb-5"
-          >
-            Submit
-          </button>
+          <SubmitButton title="Add User" />
         </div>
       </form>
     </div>

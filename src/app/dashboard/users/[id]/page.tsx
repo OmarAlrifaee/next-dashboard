@@ -1,6 +1,7 @@
 import { UserType } from "@/types";
 import Image from "next/image";
 import { getOneUser, updateUser } from "@/actions/users";
+import SubmitButton from "@/components/SubmitButton";
 type Props = {
   params: {
     id: string;
@@ -94,12 +95,7 @@ const UserDetails = async ({ params }: Props) => {
               No
             </option>
           </select>
-          <button
-            type="submit"
-            className="border-none w-full text-center text-white font-bold bg-teal-500 py-3 rounded-md mb-5"
-          >
-            Update
-          </button>
+          <SubmitButton title="Update User" />
         </form>
       </div>
     </section>

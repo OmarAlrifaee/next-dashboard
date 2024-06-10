@@ -1,4 +1,5 @@
 import { addProduct } from "@/actions/products";
+import SubmitButton from "@/components/SubmitButton";
 
 const AddProduct = () => {
   return (
@@ -68,12 +69,7 @@ const AddProduct = () => {
             placeholder="Description"
             className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold min-h-[200px]"
           ></textarea>
-          <button
-            type="submit"
-            className="border-none w-full text-center text-white font-bold bg-teal-500 py-3 rounded-md mb-5"
-          >
-            Submit
-          </button>
+          <SubmitButton title="Add Product" />
         </div>
       </form>
     </div>

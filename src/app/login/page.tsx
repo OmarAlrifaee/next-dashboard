@@ -1,4 +1,5 @@
 import { login } from "@/actions/users";
+import SubmitButton from "@/components/SubmitButton";
 const Login = () => {
   return (
     <section className="min-h-screen flex items-center justify-center">
@@ -19,12 +20,7 @@ const Login = () => {
           name="password"
           className="p-[15px] focus:outline-none rounded-md bg-main-bg text-white font-semibold"
         />{" "}
-        <button
-          type="submit"
-          className="border-none w-full text-center text-white font-bold bg-teal-500 py-3 rounded-md mb-5"
-        >
-          Login
-        </button>
+        <SubmitButton title="Login" />
       </form>
     </section>
   );
